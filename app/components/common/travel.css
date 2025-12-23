@@ -1,0 +1,16 @@
+/* Travel animations CSS */
+.travel-item {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.plane-icon,
+.train-icon,
+.boat-icon,
+.bike-icon,
+.bus-icon {
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
