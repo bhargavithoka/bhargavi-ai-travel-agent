@@ -45,6 +45,8 @@ const TabGrid = memo(function TabGrid({ tabs, activeTab, onTabChange }: Props) {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
+      role="tablist"
+      aria-label="Travel planning tabs"
     >
       <div className="grid grid-cols-3 gap-2 w-full max-w-lg">
         {tabs.map((t, idx) => {
@@ -62,6 +64,9 @@ const TabGrid = memo(function TabGrid({ tabs, activeTab, onTabChange }: Props) {
               onHoverEnd={() => setHoveredTab(null)}
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.97 }}
+              role="tab"
+              aria-selected={isActive}
+              aria-label={`${t.name} tab`}
               className="relative group h-20 rounded-lg overflow-hidden cursor-pointer will-change-transform"
             >
               {/* Background gradient base */}

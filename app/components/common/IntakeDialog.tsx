@@ -54,6 +54,43 @@ export function IntakeDialog({
         setError("Please enter a valid date");
         return;
       }
+      // Check if date is in the past
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (dateValue < today) {
+        setError("Travel date cannot be in the past");
+        return;
+      }
+    }
+
+    // Validate date range
+    if (currentQuestion.type === "dateRange" && typeof currentAnswer === "string") {
+      const [startStr, endStr] = currentAnswer.split("|");
+      if (!startStr || !endStr) {
+        setError("Please enter both start and end dates");
+        return;
+      }
+      const startDate = new Date(startStr);
+      const endDate = new Date(endStr);
+      
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        setError("Please enter valid dates");
+        return;
+      }
+
+      // Check if start date is in the past
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (startDate < today) {
+        setError("Start date cannot be in the past");
+        return;
+      }
+
+      // Check if end date is before start date
+      if (endDate < startDate) {
+        setError("End date cannot be before start date");
+        return;
+      }
     }
 
     let finalAnswer: string | number | string[] = currentAnswer;
@@ -193,6 +230,7 @@ export function IntakeDialog({
               value={typeof currentAnswer === "string" ? currentAnswer : ""}
               onChange={(e) => setCurrentAnswer(e.target.value)}
               onKeyDown={handleKeyDown}
+              min={new Date().toISOString().split("T")[0]}
               autoFocus
               className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-200"
             />
@@ -218,6 +256,7 @@ export function IntakeDialog({
                         : "";
                     setCurrentAnswer(endDate ? `${startDate}|${endDate}` : startDate);
                   }}
+                  min={new Date().toISOString().split("T")[0]}
                   autoFocus
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-200"
                 />
@@ -239,6 +278,11 @@ export function IntakeDialog({
                     const endDate = e.target.value;
                     setCurrentAnswer(startDate ? `${startDate}|${endDate}` : endDate);
                   }}
+                  min={
+                    typeof currentAnswer === "string" && currentAnswer.split("|")[0]
+                      ? currentAnswer.split("|")[0]
+                      : new Date().toISOString().split("T")[0]
+                  }
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-200"
                 />
               </div>

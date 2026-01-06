@@ -2,12 +2,14 @@
 
 import { memo } from "react";
 import { motion } from "framer-motion";
-import { Plane, Train, Ship, Bike } from "lucide-react";
+import { Plane, Ship, Train, Bus, Bike } from "lucide-react";
 import { useWindowDimensions } from "@/app/hooks/useWindowDimensions";
+import { useSettings } from "../../contexts/SettingsContext";
 import "./travel.css";
 
 const TravelAnimations = memo(function TravelAnimations() {
   const dimensions = useWindowDimensions();
+  const { shouldReduceMotion } = useSettings();
 
   if (dimensions.width === 0) return null;
 
@@ -19,50 +21,23 @@ const TravelAnimations = memo(function TravelAnimations() {
         style={{
           filter: "drop-shadow(0 0 12px rgba(59, 130, 246, 0.6))",
         }}
-        animate={{
+        animate={shouldReduceMotion ? {} : {
           x: [0, dimensions.width + 100],
-          y: [0, 100],
+          y: [0, 50],
         }}
         transition={{
-          x: { duration: 15, repeat: Infinity, ease: "linear" },
-          y: { duration: 15, repeat: Infinity, ease: "easeInOut" },
+          x: { duration: 20, repeat: Infinity, ease: "linear" },
+          y: { duration: 20, repeat: Infinity, ease: "easeInOut" },
         }}
       >
         <motion.div
           className="plane-icon"
-          animate={{ opacity: [0.25, 0.35], rotate: [0, 5, -5] }}
+          animate={shouldReduceMotion ? {} : { opacity: [0.3, 0.5] }}
           transition={{
             opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-            rotate: { duration: 3, repeat: Infinity, ease: "easeInOut" },
           }}
         >
           <Plane size={42} strokeWidth={1.3} />
-        </motion.div>
-      </motion.div>
-
-      {/* Train - Moving horizontally near bottom */}
-      <motion.div
-        className="absolute bottom-1/4 -left-12 text-orange-400 travel-item"
-        style={{
-          filter: "drop-shadow(0 0 10px rgba(249, 115, 22, 0.5))",
-        }}
-        animate={{
-          x: [0, dimensions.width + 100],
-        }}
-        transition={{
-          x: { duration: 20, repeat: Infinity, ease: "linear", delay: 3 },
-        }}
-      >
-        <motion.div
-          className="train-icon"
-          animate={{ opacity: [0.2, 0.3], rotate: [-1, 1], scale: [0.98, 1.02] }}
-          transition={{
-            opacity: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
-            rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-            scale: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
-          }}
-        >
-          <Train size={38} strokeWidth={1.3} />
         </motion.div>
       </motion.div>
 
@@ -72,90 +47,101 @@ const TravelAnimations = memo(function TravelAnimations() {
         style={{
           filter: "drop-shadow(0 0 14px rgba(34, 211, 238, 0.5))",
         }}
-        animate={{
+        animate={shouldReduceMotion ? {} : {
           x: [0, dimensions.width + 100],
-          y: [0, 20, 5, 15, 0],
+          y: [0, 10],
         }}
         transition={{
-          x: { duration: 25, repeat: Infinity, ease: "linear", delay: 6 },
-          y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+          x: { duration: 30, repeat: Infinity, ease: "linear", delay: 5 },
+          y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
         }}
       >
         <motion.div
           className="boat-icon"
-          animate={{ opacity: [0.2, 0.32], rotate: [-2, 2], scale: [0.95, 1.05] }}
+          animate={shouldReduceMotion ? {} : { opacity: [0.2, 0.4] }}
           transition={{
             opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-            rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-            scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
           }}
         >
           <Ship size={40} strokeWidth={1.3} />
         </motion.div>
       </motion.div>
 
-      {/* Bike - Moving slowly */}
+      {/* Train - Moving from right to left */}
       <motion.div
-        className="absolute top-1/3 -left-10 text-green-400 travel-item"
+        className="absolute top-2/3 -right-16 text-green-400 travel-item"
         style={{
           filter: "drop-shadow(0 0 10px rgba(34, 197, 94, 0.5))",
         }}
-        animate={{
-          x: [0, dimensions.width + 100],
+        animate={shouldReduceMotion ? {} : {
+          x: [0, -dimensions.width - 100],
+          y: [0, -20],
         }}
         transition={{
-          x: { duration: 22, repeat: Infinity, ease: "linear", delay: 9 },
+          x: { duration: 25, repeat: Infinity, ease: "linear", delay: 8 },
+          y: { duration: 8, repeat: Infinity, ease: "easeInOut" },
         }}
       >
         <motion.div
-          className="bike-icon"
-          animate={{ opacity: [0.22, 0.32], rotate: [0, -3, 3], scale: [0.97, 1.03] }}
+          className="train-icon"
+          animate={shouldReduceMotion ? {} : { opacity: [0.25, 0.45] }}
           transition={{
-            opacity: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
-            rotate: { duration: 3.5, repeat: Infinity, ease: "easeInOut" },
-            scale: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
+            opacity: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
           }}
         >
-          <Bike size={37} strokeWidth={1.3} />
+          <Train size={38} strokeWidth={1.3} />
         </motion.div>
       </motion.div>
 
-      {/* Bus - Bottom area moving slow */}
+      {/* Bus - Moving from top to bottom */}
       <motion.div
-        className="absolute bottom-1/5 -left-14 text-yellow-400 travel-item"
+        className="absolute top-0 left-1/3 text-yellow-400 travel-item"
         style={{
-          filter: "drop-shadow(0 0 8px rgba(234, 179, 8, 0.4))",
+          filter: "drop-shadow(0 0 11px rgba(250, 204, 21, 0.5))",
         }}
-        animate={{
-          x: [0, dimensions.width + 100],
-          y: [0, 8],
+        animate={shouldReduceMotion ? {} : {
+          y: [0, dimensions.height + 100],
+          x: [0, 30],
         }}
         transition={{
-          x: { duration: 18, repeat: Infinity, ease: "linear", delay: 12 },
-          y: { duration: 3.5, repeat: Infinity, ease: "easeInOut" },
+          y: { duration: 22, repeat: Infinity, ease: "linear", delay: 12 },
+          x: { duration: 11, repeat: Infinity, ease: "easeInOut" },
         }}
       >
         <motion.div
           className="bus-icon"
-          animate={{ opacity: [0.18, 0.28], scale: [0.96, 1.04] }}
+          animate={shouldReduceMotion ? {} : { opacity: [0.3, 0.5] }}
           transition={{
-            opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-            scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+            opacity: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
           }}
         >
-          <svg
-            width="42"
-            height="42"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.3"
-          >
-            <rect x="2" y="6" width="16" height="12" rx="2" />
-            <circle cx="6" cy="19" r="1.5" />
-            <circle cx="14" cy="19" r="1.5" />
-            <path d="M2 10h6M12 6v8" />
-          </svg>
+          <Bus size={36} strokeWidth={1.3} />
+        </motion.div>
+      </motion.div>
+
+      {/* Bike - Moving diagonally from top-right */}
+      <motion.div
+        className="absolute -top-12 right-1/4 text-orange-400 travel-item"
+        style={{
+          filter: "drop-shadow(0 0 9px rgba(249, 115, 22, 0.5))",
+        }}
+        animate={shouldReduceMotion ? {} : {
+          x: [0, -dimensions.width - 100],
+          y: [0, dimensions.height + 100],
+        }}
+        transition={{
+          x: { duration: 28, repeat: Infinity, ease: "linear", delay: 15 },
+          y: { duration: 28, repeat: Infinity, ease: "linear" },
+        }}
+      >
+        <motion.div
+          className="bike-icon"
+          animate={shouldReduceMotion ? {} : { opacity: [0.2, 0.4] }}
+          transition={{
+            opacity: { duration: 3.2, repeat: Infinity, ease: "easeInOut" },
+          }}
+        >
+          <Bike size={34} strokeWidth={1.3} />
         </motion.div>
       </motion.div>
     </div>

@@ -92,11 +92,11 @@ export function generateItinerary(
   preferences?: Record<string, any>
 ): Itinerary {
   const days = intake.dates?.startDate && intake.dates?.endDate
-    ? Math.ceil(
+    ? Math.floor(
         (new Date(intake.dates.endDate).getTime() -
           new Date(intake.dates.startDate).getTime()) /
           (1000 * 60 * 60 * 24)
-      )
+      ) + 1  // Add 1 to include both start and end dates
     : 5;
 
   const destination = intake.destination || "Destination";

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useSettings } from "../../contexts/SettingsContext";
 
 interface StatProps {
   label: string;
@@ -19,9 +20,9 @@ export function Stat({ label, value, delay = 0 }: StatProps) {
         stiffness: 100,
         damping: 15,
       }}
-      className="rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20 p-6 hover:bg-white/15 transition-colors duration-300"
+      className={`rounded-2xl backdrop-blur-xl p-6 transition-colors duration-300 bg-white/20 border border-gray-300/30 hover:bg-white/25`}
     >
-      <p className="text-sm font-medium text-white/60 uppercase tracking-wider">
+      <p className={`text-sm font-medium uppercase tracking-wider text-gray-600`}>
         {label}
       </p>
       <p className="mt-3 text-3xl font-bold bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">

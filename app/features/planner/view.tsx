@@ -290,7 +290,13 @@ export function PlannerView({ aiResult, intakeData }: PlannerViewProps) {
         </div>
       ) : !loading && itinerary.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-white/60">Loading your itinerary...</p>
+          <AlertCircle className="h-8 w-8 text-orange-400 mx-auto mb-3" />
+          <p className="text-white/60">Unable to generate itinerary</p>
+          <p className="text-white/40 text-sm mt-2">Ensure you have provided trip dates and a destination.</p>
+        </div>
+      ) : loading ? (
+        <div className="text-center py-8">
+          <p className="text-white/60">Generating your itinerary...</p>
         </div>
       ) : null}
 

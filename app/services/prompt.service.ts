@@ -12,6 +12,7 @@ IMPORTANT RULES:
 - Focus ONLY on flights.
 - Set hotels, food, activities to 0.
 - Recommendations MUST be flight-related only.
+- If dates are provided (Start date: X, End date: Y), calculate days as: (Y - X) + 1 to include both dates.
 - If dates are vague, give an approximate estimate.
 
 Respond ONLY in JSON with this structure:
@@ -38,6 +39,7 @@ IMPORTANT RULES:
 - Focus ONLY on hotels/areas to stay.
 - Set flights, food, activities to 0.
 - Recommendations MUST be hotel/area-related only.
+- If dates are provided (Start date: X, End date: Y), calculate days as: (Y - X) + 1 to include both dates.
 - If trip length is unknown, set days to 0.
 
 
@@ -65,6 +67,7 @@ IMPORTANT RULES:
 - Focus on budget planning and cost optimization.
 - Fill all budget categories realistically.
 - Recommendations MUST be budget/cost-saving tips.
+- If dates are provided (Start date: X, End date: Y), calculate days as: (Y - X) + 1 to include both dates.
 
 
 Respond ONLY in JSON with this structure:
@@ -141,6 +144,10 @@ User request:
     default:
       return `
 You are a professional travel advisor.
+
+IMPORTANT RULES:
+- If dates are provided (Start date: X, End date: Y), calculate days as: (Y - X) + 1 to include both dates.
+- Fill all budget categories realistically based on the destination and trip length.
 
 Respond ONLY in JSON with this structure:
 {

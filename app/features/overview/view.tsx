@@ -1,4 +1,5 @@
 // Extracted from page.tsx - Overview tab component
+import React from "react";
 import { motion } from "framer-motion";
 import { AIResult } from "@/app/types/travel.types";
 import { Stat } from "@/app/components/common/Stat";
@@ -37,7 +38,7 @@ const itemVariants = {
   },
 };
 
-export function OverviewView({
+export const OverviewView = React.memo(function OverviewView({
   aiResult,
   totalCost,
   travelStyle,
@@ -361,4 +362,4 @@ export function OverviewView({
       )}
     </div>
   );
-}
+});
